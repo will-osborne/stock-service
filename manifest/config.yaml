@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stocksvc-cfg
+  labels:
+    app: stocksvc
+data:
+  NDAYS: '7'
+  SYMBOL: MSFT

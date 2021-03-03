@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stocksvc
+  labels:
+    app: stocksvc
+spec:
+  selector:
+    matchLabels:
+      app: stocksvc
+  template:
+    metadata:
+      labels:
+        app: stocksvc
+    spec:
+      containers:
+        - image: williamosborne/stocksvc:v1.0.3
+          name: stocksvc
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: stocksvc-cfg
+          volumeMounts:
+            - name: stocksvc-api-key-secret
+              mountPath: "/mnt/secrets/"
+              readOnly: true
+      volumes:
+        - name: stocksvc-api-key-secret
+          secret:
+            secretName: stocksvc-api-key
